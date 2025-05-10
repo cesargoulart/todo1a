@@ -3,6 +3,7 @@ import 'package:hive/hive.dart'; // Necessário para BoxEvent
 import '../models/task.dart';
 import '../widgets/task_list.dart';
 import '../services/hive_service.dart'; // Importar o HiveService
+import '../widgets/animated_background.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -276,15 +277,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lista de Tarefas'),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+    return AnimatedBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: const Text('Lista de Tarefas'),
+          backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.85),
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
         actions: [
           IconButton(
             icon: Icon(
-              _showCompletedTasks ? Icons.visibility_off : Icons.visibility,
+              _showCompletedTasks ? Icons.visibility_off_outlined : Icons.visibility_outlined,
             ),
             tooltip: _showCompletedTasks ? 'Ocultar Concluídas' : 'Mostrar Concluídas',
             onPressed: _toggleShowCompletedTasks,
@@ -305,10 +308,11 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddTaskDialog,
         tooltip: 'Adicionar Tarefa',
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add_task_rounded),
       ),
-    );
-  }
+    ),
+  );
+}
 
   @override
   void dispose() {
